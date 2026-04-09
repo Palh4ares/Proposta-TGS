@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="TGSLog – Soluções inteligentes em logística, monitoramento e gestão operacional.">
+<title>TGSLog – Soluções em Logística e Gestão</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="icon" href="favicon.png" type="image/png">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;700;800;900&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+/* ── RESET & BASE ────────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Lato',sans-serif;color:#1F2937;background:#fff;overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+ul{list-style:none}
+img{max-width:100%;display:block}
+
+/* ── VARIÁVEIS ────────────────────────────────── */
+:root{
+  --navy:#0D1B3E;--navy2:#162348;--navy3:#081228;
+  --orange:#F97316;--orange2:#EA6A08;
+  --gray:#6B7280;--lgray:#F4F5F7;--mgray:#E5E7EB;
+  --white:#fff;--text:#1F2937;
+  --radius:12px;--radius-sm:8px;
+  --shadow:0 4px 24px rgba(13,27,62,.10);
+  --shadow-lg:0 8px 40px rgba(13,27,62,.16);
+}
+
+/* ── UTILITÁRIOS ────────────────────────────────── */
+.container{max-width:1200px;margin:0 auto;padding:0 1.5rem}
+.section{padding:5rem 0}
+.section-badge{display:inline-block;background:rgba(249,115,22,.12);color:var(--orange);font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.82rem;letter-spacing:.08em;text-transform:uppercase;padding:.3rem .9rem;border-radius:100px;margin-bottom:1rem}
+.section-badge--light{background:rgba(255,255,255,.15);color:#fff;border-color:rgba(255,255,255,.3)}
+.section-title{font-family:'Barlow Condensed',sans-serif;font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:800;color:var(--navy);line-height:1.2;margin-bottom:1rem}
+.section-sub{color:var(--gray);font-size:1.05rem;max-width:580px;margin:0 auto}
+.section-header{text-align:center;margin-bottom:3rem}
+.highlight{color:var(--orange)}
+.text-center{text-align:center}
+
+/* ── BOTÕES ────────────────────────────────── */
+.btn{display:inline-flex;align-items:center;gap:.5rem;padding:.75rem 1.75rem;border-radius:var(--radius-sm);font-family:'Barlow Condensed',sans-serif;font-size:1rem;font-weight:700;letter-spacing:.03em;cursor:pointer;border:2px solid transparent;transition:all .3s}
+.btn--orange{background:var(--orange);color:#fff;border-color:var(--orange)}
+.btn--orange:hover{background:var(--orange2);transform:translateY(-2px);box-shadow:0 6px 20px rgba(249,115,22,.35)}
+.btn--navy{background:var(--navy);color:#fff}
+.btn--navy:hover{background:var(--navy2);transform:translateY(-2px)}
+.btn--outline{background:transparent;color:var(--navy);border-color:var(--navy)}
+.btn--outline:hover{background:var(--navy);color:#fff;transform:translateY(-2px)}
+.btn--lg{padding:.9rem 2.2rem;font-size:1.1rem}
+.btn--full{width:100%;justify-content:center}
+
+/* ── NAVBAR ────────────────────────────────── */
+.navbar{position:fixed;top:0;left:0;right:0;z-index:999;padding:1rem 0;background:transparent;transition:all .3s}
+.navbar.scrolled{background:var(--navy);padding:.6rem 0;box-shadow:0 4px 24px rgba(0,0,0,.3)}
+.navbar__inner{display:flex;align-items:center;gap:2rem}
+.navbar__logo{font-family:'Barlow Condensed',sans-serif;font-size:1.9rem;font-weight:800}
+.logo-tgs{color:#fff}.logo-log{color:var(--orange)}
+.navbar__list{display:flex;align-items:center;gap:2rem;margin-left:auto}
+.navbar__link{color:rgba(255,255,255,.85);font-size:.95rem;font-weight:500;transition:color .3s}
+.navbar__link:hover{color:var(--orange)}
+.navbar__cta{margin-left:1rem}
+.navbar__hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;margin-left:auto}
+.navbar__hamburger span{display:block;width:24px;height:2px;background:#fff;border-radius:4px;transition:all .3s}
+
+/* ── HERO ────────────────────────────────── */
+.hero{min-height:100vh;background:linear-gradient(135deg,var(--navy3) 0%,var(--navy2) 60%,#1a3060 100%);display:flex;align-items:center;position:relative;overflow:hidden;padding:8rem 0 4rem}
+.hero::before{content:'';position:absolute;top:-150px;right:-150px;width:600px;height:600px;background:var(--orange);border-radius:50%;opacity:.06;pointer-events:none}
+.hero::after{content:'';position:absolute;bottom:-100px;left:-100px;width:400px;height:400px;background:#fff;border-radius:50%;opacity:.04;pointer-events:none}
+.hero__inner{position:relative;z-index:1;display:grid;grid-template-columns:1fr;gap:3rem;align-items:center}
+.hero__badge{display:inline-flex;align-items:center;gap:.5rem;background:rgba(249,115,22,.2);color:var(--orange);font-size:.85rem;font-weight:700;padding:.4rem 1rem;border-radius:100px;border:1px solid rgba(249,115,22,.3);margin-bottom:1.5rem}
+.hero__title{font-family:'Barlow Condensed',sans-serif;font-size:clamp(2.8rem,6vw,4.5rem);font-weight:900;color:#fff;line-height:1.1;margin-bottom:1.5rem}
+.hero__sub{color:rgba(255,255,255,.75);font-size:1.1rem;margin-bottom:2rem;max-width:600px}
+.hero__actions{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:3rem}
+.hero__actions .btn--outline{color:#fff;border-color:rgba(255,255,255,.5)}
+.hero__actions .btn--outline:hover{background:rgba(255,255,255,.1);color:#fff;border-color:#fff}
+.hero__stats{display:flex;gap:3rem;padding-top:2rem;border-top:1px solid rgba(255,255,255,.15)}
+.stat strong{display:block;font-family:'Barlow Condensed',sans-serif;font-size:2.2rem;font-weight:900;color:var(--orange);line-height:1}
+.stat span{color:rgba(255,255,255,.6);font-size:.85rem;margin-top:.2rem;display:block}
+
+/* ── MARQUEE ────────────────────────────────── */
+.marquee-wrap{background:var(--orange);padding:.9rem 0;overflow:hidden}
+.marquee-track{display:flex;gap:3rem;white-space:nowrap;animation:marquee 30s linear infinite}
+.marquee-track span{color:#fff;font-family:'Barlow Condensed',sans-serif;font-size:1rem;font-weight:700;letter-spacing:.04em;display:flex;align-items:center;gap:.5rem;flex-shrink:0}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ── SOBRE ────────────────────────────────── */
+.sobre{background:#fff}
+.sobre__inner{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
+.sobre__text p{color:var(--gray);margin-bottom:1rem;line-height:1.75}
+.sobre__items{margin:1.5rem 0 2rem;display:flex;flex-direction:column;gap:1rem}
+.sobre__item{display:flex;align-items:flex-start;gap:1rem}
+.sobre__item i{font-size:1.4rem;color:var(--orange);margin-top:.1rem;flex-shrink:0}
+.sobre__item strong{display:block;color:var(--navy);font-weight:700}
+.sobre__item span{font-size:.9rem;color:var(--gray)}
+.sobre__visual{display:flex;justify-content:center}
+.sobre__img-wrap{position:relative;width:360px;height:360px;display:flex;align-items:center;justify-content:center}
+.sobre__accent{position:absolute;inset:0;background:linear-gradient(135deg,var(--navy),var(--navy2));border-radius:40% 60% 60% 40%/50% 50% 50% 50%;animation:morph 6s ease-in-out infinite}
+@keyframes morph{0%,100%{border-radius:40% 60% 60% 40%/50% 50% 50% 50%}50%{border-radius:60% 40% 40% 60%/40% 60% 40% 60%}}
+.sobre__graphic{position:relative;z-index:1;color:rgba(255,255,255,.15)}
+.sobre__badge-float{position:absolute;bottom:20px;right:-20px;background:var(--orange);color:#fff;border-radius:var(--radius-sm);padding:.75rem 1.2rem;display:flex;align-items:center;gap:.75rem;box-shadow:var(--shadow-lg);z-index:2}
+.sobre__badge-float i{font-size:1.5rem}
+.sobre__badge-float strong{display:block;font-size:1.2rem;font-weight:800}
+.sobre__badge-float small{font-size:.75rem;opacity:.85}
+
+/* ── SOLUÇÕES ────────────────────────────────── */
+.solucoes{background:var(--lgray)}
+.solucoes__grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.solucao-card{background:#fff;border-radius:var(--radius);padding:2rem;box-shadow:var(--shadow);transition:all .3s;position:relative;overflow:hidden}
+.solucao-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px}
+.solucao-card--orange::before{background:var(--orange)}
+.solucao-card--navy::before{background:var(--navy)}
+.solucao-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg)}
+.solucao-card__icon{width:56px;height:56px;border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;font-size:1.4rem;margin-bottom:1.25rem}
+.solucao-card--orange .solucao-card__icon{background:rgba(249,115,22,.1);color:var(--orange)}
+.solucao-card--navy .solucao-card__icon{background:rgba(13,27,62,.08);color:var(--navy)}
+.solucao-card h3{font-family:'Barlow Condensed',sans-serif;font-size:1.2rem;font-weight:700;color:var(--navy);margin-bottom:.75rem}
+.solucao-card p{color:var(--gray);font-size:.92rem;margin-bottom:1.5rem;line-height:1.65}
+.solucao-card__link{color:var(--orange);font-weight:700;font-size:.9rem;display:flex;align-items:center;gap:.4rem;transition:gap .3s}
+.solucao-card__link:hover{gap:.7rem}
+
+/* ── VANTAGENS ────────────────────────────────── */
+.vantagens{background:linear-gradient(135deg,var(--navy3),var(--navy2));position:relative;overflow:hidden}
+.vantagens::before{content:'';position:absolute;top:-100px;right:-100px;width:400px;height:400px;background:var(--orange);border-radius:50%;opacity:.06}
+.vantagens__grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.vantagem-item{display:flex;align-items:flex-start;gap:1.25rem;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:var(--radius);padding:1.75rem;transition:all .3s}
+.vantagem-item:hover{background:rgba(255,255,255,.1);transform:translateY(-4px)}
+.vantagem-item__icon{width:50px;height:50px;background:var(--orange);border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;color:#fff;font-size:1.2rem;flex-shrink:0}
+.vantagem-item strong{display:block;color:#fff;font-weight:700;margin-bottom:.4rem}
+.vantagem-item p{color:rgba(255,255,255,.65);font-size:.88rem;line-height:1.65}
+
+/* ── BLOG ────────────────────────────────── */
+.blog{background:var(--lgray)}
+.blog__grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.post-card{background:#fff;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);transition:all .3s}
+.post-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg)}
+.post-card__img{height:180px;background:linear-gradient(135deg,var(--navy),var(--navy2));display:flex;align-items:flex-start;padding:1rem}
+.post-card__cat{background:var(--orange);color:#fff;font-size:.75rem;font-weight:700;padding:.25rem .75rem;border-radius:100px;font-family:'Barlow Condensed',sans-serif;letter-spacing:.05em}
+.post-card__body{padding:1.5rem}
+.post-card__date{color:var(--gray);font-size:.8rem;display:flex;align-items:center;gap:.4rem;margin-bottom:.75rem}
+.post-card__body h3{font-family:'Barlow Condensed',sans-serif;font-size:1.15rem;font-weight:700;color:var(--navy);margin-bottom:.75rem;line-height:1.3}
+.post-card__body p{color:var(--gray);font-size:.88rem;margin-bottom:1.25rem;line-height:1.65}
+.post-card__link{color:var(--orange);font-weight:700;font-size:.88rem;display:flex;align-items:center;gap:.4rem;transition:gap .3s}
+.post-card__link:hover{gap:.7rem}
+
+/* ── CTA / CONTATO ────────────────────────────────── */
+.cta-banner{background:linear-gradient(135deg,var(--navy),var(--navy2));padding:5rem 0}
+.cta-banner__inner{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start}
+.cta-banner h2{font-family:'Barlow Condensed',sans-serif;font-size:clamp(1.6rem,3vw,2.4rem);font-weight:800;color:#fff;margin-bottom:.75rem}
+.cta-banner p{color:rgba(255,255,255,.7)}
+.cta-banner__form{background:#fff;border-radius:var(--radius);padding:2rem;box-shadow:var(--shadow-lg)}
+.cta-banner__form input,.cta-banner__form textarea{width:100%;border:2px solid var(--mgray);border-radius:var(--radius-sm);padding:.75rem 1rem;font-family:'Lato',sans-serif;font-size:.95rem;color:var(--text);margin-bottom:1rem;transition:border .3s;outline:none}
+.cta-banner__form input:focus,.cta-banner__form textarea:focus{border-color:var(--navy)}
+.cta-banner__form textarea{resize:vertical}
+
+/* ── FOOTER ────────────────────────────────── */
+.footer{background:var(--navy3);padding:4rem 0 0}
+.footer__grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3rem;padding-bottom:3rem}
+.footer__brand p{color:rgba(255,255,255,.55);font-size:.9rem;margin:1rem 0 1.5rem;line-height:1.7}
+.footer__socials{display:flex;gap:.75rem}
+.footer__socials a{width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.7);transition:all .3s}
+.footer__socials a:hover{background:var(--orange);color:#fff}
+.footer__col h4{font-family:'Barlow Condensed',sans-serif;font-size:1rem;font-weight:700;color:#fff;letter-spacing:.04em;text-transform:uppercase;margin-bottom:1.25rem}
+.footer__col ul li{margin-bottom:.65rem}
+.footer__col ul li a{color:rgba(255,255,255,.55);font-size:.9rem;transition:color .3s}
+.footer__col ul li a:hover{color:var(--orange)}
+.footer__contact li{display:flex;align-items:flex-start;gap:.6rem;color:rgba(255,255,255,.55);font-size:.88rem;margin-bottom:.75rem}
+.footer__contact i{color:var(--orange);margin-top:.15rem;flex-shrink:0}
+.footer__contact a{color:rgba(255,255,255,.55);transition:color .3s}
+.footer__contact a:hover{color:var(--orange)}
+.footer__bottom{border-top:1px solid rgba(255,255,255,.08);padding:1.25rem 0}
+.footer__bottom .container{display:flex;align-items:center;justify-content:space-between}
+.footer__bottom p{color:rgba(255,255,255,.35);font-size:.82rem}
+.footer__links{display:flex;gap:1.5rem}
+.footer__links a{color:rgba(255,255,255,.35);font-size:.82rem;transition:color .3s}
+.footer__links a:hover{color:var(--orange)}
+
+/* ── WHATSAPP FLOAT ────────────────────────────────── */
+.whatsapp-float{position:fixed;bottom:2rem;right:2rem;width:56px;height:56px;background:#25d366;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:1.6rem;box-shadow:0 4px 20px rgba(37,211,102,.5);z-index:998;transition:all .3s;animation:floatWA 2s ease-in-out infinite}
+.whatsapp-float:hover{transform:scale(1.1)!important}
+@keyframes floatWA{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+
+/* ── ANIMAÇÕES ────────────────────────────────── */
+[data-animate]{opacity:0;transform:translateY(30px);transition:opacity .7s ease,transform .7s ease}
+[data-animate="fade-left"]{transform:translateX(-30px)}
+[data-animate="fade-right"]{transform:translateX(30px)}
+[data-animate].in-view{opacity:1;transform:translate(0)}
+
+/* ── RESPONSIVO ────────────────────────────────── */
+@media(max-width:1024px){
+  .sobre__inner{grid-template-columns:1fr}
+  .sobre__visual{display:none}
+  .solucoes__grid{grid-template-columns:repeat(2,1fr)}
+  .vantagens__grid{grid-template-columns:repeat(2,1fr)}
+  .blog__grid{grid-template-columns:repeat(2,1fr)}
+  .cta-banner__inner{grid-template-columns:1fr}
+  .footer__grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:768px){
+  .navbar__list,.navbar__cta{display:none}
+  .navbar__list.open{display:flex;flex-direction:column;position:fixed;inset:0;background:var(--navy3);justify-content:center;align-items:center;gap:0}
+  .navbar__list.open .navbar__link{font-size:1.5rem;padding:1rem}
+  .navbar__hamburger{display:flex}
+  .solucoes__grid,.vantagens__grid,.blog__grid{grid-template-columns:1fr}
+  .footer__grid{grid-template-columns:1fr}
+  .footer__bottom .container{flex-direction:column;gap:.5rem;text-align:center}
+  .hero__stats{flex-wrap:wrap;gap:1.5rem}
+  .hero__actions{flex-direction:column}
+  .hero__actions .btn{text-align:center;justify-content:center}
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════ NAVBAR ══════════════════ -->
+<header class="navbar" id="navbar">
+  <div class="container navbar__inner">
+    <a href="tgslog-landing.html" class="navbar__logo">
+    <img src="iconTGS.png" alt="TGSLOG" width="180px" class="logo-img">
+</a>
+    <ul class="navbar__list" id="navMenu">
+      <li><a href="#sobre" class="navbar__link">Sobre Nós</a></li>
+      <li><a href="#solucoes" class="navbar__link">Soluções</a></li>
+      <li><a href="#vantagens" class="navbar__link">Vantagens</a></li>
+      <li><a href="#blog" class="navbar__link">Blog</a></li>
+    </ul>
+    <a href="#contato" class="btn btn--orange navbar__cta">Fale com um Especialista</a>
+    <button class="navbar__hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- ══════════════════ HERO ══════════════════ -->
+<section class="hero" id="inicio">
+  <div class="container hero__inner">
+    <div class="hero__content" data-animate="fade-up">
+      <span class="hero__badge"><i class="fas fa-bolt"></i> Tecnologia em tempo real</span>
+      <h1 class="hero__title">
+        Controle total das suas<br>
+        <span class="highlight">operações logísticas</span>
+      </h1>
+      <p class="hero__sub">
+        Monitoramento inteligente, apontamento de máquinas e tomada de decisão em tempo real.
+        Mais controle, mais transparência, mais resultado.
+      </p>
+      <div class="hero__actions">
+        <a href="#contato" class="btn btn--orange btn--lg">Agendar Demonstração</a>
+        <a href="#solucoes" class="btn btn--outline btn--lg">Conhecer Soluções</a>
+      </div>
+      <div class="hero__stats">
+        <div class="stat"><strong>+200</strong><span>Clientes Ativos</span></div>
+        <div class="stat"><strong>99,9%</strong><span>Uptime Garantido</span></div>
+        <div class="stat"><strong>15 anos</strong><span>de Experiência</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ MARQUEE ══════════════════ -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <span><i class="fas fa-check-circle"></i> Monitoramento em Tempo Real</span>
+    <span><i class="fas fa-check-circle"></i> Relatório RDUM</span>
+    <span><i class="fas fa-check-circle"></i> Gestão de Frotas</span>
+    <span><i class="fas fa-check-circle"></i> Plataforma 24h</span>
+    <span><i class="fas fa-check-circle"></i> Suporte Especializado</span>
+    <span><i class="fas fa-check-circle"></i> Certificação Nacional</span>
+    <span><i class="fas fa-check-circle"></i> Monitoramento em Tempo Real</span>
+    <span><i class="fas fa-check-circle"></i> Relatório RDUM</span>
+    <span><i class="fas fa-check-circle"></i> Gestão de Frotas</span>
+    <span><i class="fas fa-check-circle"></i> Plataforma 24h</span>
+    <span><i class="fas fa-check-circle"></i> Suporte Especializado</span>
+    <span><i class="fas fa-check-circle"></i> Certificação Nacional</span>
+  </div>
+</div>
+
+<!-- ══════════════════ SOBRE ══════════════════ -->
+<section class="section sobre" id="sobre">
+  <div class="container sobre__inner">
+    <div class="sobre__text" data-animate="fade-right">
+      <span class="section-badge">Quem Somos</span>
+      <h2 class="section-title">Uma empresa dedicada à <span class="highlight">excelência operacional</span></h2>
+      <p>A <strong>TGSLog</strong> é especialista em soluções de logística e gestão operacional, oferecendo tecnologia de ponta para empresas que precisam de controle total sobre suas máquinas, frotas e operações.</p>
+      <p>Com anos de experiência no mercado, desenvolvemos ferramentas que transformam dados brutos em decisões inteligentes, aumentando a produtividade e reduzindo custos operacionais.</p>
+      <div class="sobre__items">
+        <div class="sobre__item">
+          <i class="fas fa-shield-alt"></i>
+          <div><strong>Segurança e Confiabilidade</strong><span>Dados protegidos e sistema disponível 24/7</span></div>
+        </div>
+        <div class="sobre__item">
+          <i class="fas fa-chart-line"></i>
+          <div><strong>Resultados Comprovados</strong><span>Redução de até 30% nos custos operacionais</span></div>
+        </div>
+      </div>
+      <a href="#contato" class="btn btn--navy">Fale com Nossa Equipe</a>
+    </div>
+    <div class="sobre__visual" data-animate="fade-left">
+      <div class="sobre__img-wrap">
+        <div class="sobre__accent"></div>
+        <div class="sobre__badge-float">
+          <i class="fas fa-award"></i>
+          <div><strong>+15 Anos</strong><small>de Mercado</small></div>
+        </div>
+        <div class="sobre__graphic"><i class="fas fa-cogs fa-5x"></i></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ SOLUÇÕES ══════════════════ -->
+<section class="section solucoes" id="solucoes">
+  <div class="container">
+    <div class="section-header" data-animate="fade-up">
+      <span class="section-badge">O Que Oferecemos</span>
+      <h2 class="section-title">Soluções completas para sua <span class="highlight">operação</span></h2>
+      <p class="section-sub">Tecnologia desenvolvida para resolver os desafios reais do dia a dia logístico.</p>
+    </div>
+    <div class="solucoes__grid">
+      <div class="solucao-card solucao-card--orange" data-animate="fade-up">
+        <div class="solucao-card__icon"><i class="fas fa-desktop"></i></div>
+        <h3>Relatório RDUM</h3>
+        <p>Relatório Diário de Utilização de Máquinas com apontamento em tempo real, histórico completo e indicadores de desempenho.</p>
+        <a href="#contato" class="solucao-card__link">Saiba mais <i class="fas fa-arrow-right"></i></a>
+      </div>
+      <div class="solucao-card solucao-card--navy" data-animate="fade-up" style="transition-delay:.1s">
+        <div class="solucao-card__icon"><i class="fas fa-truck"></i></div>
+        <h3>Gestão de Frotas</h3>
+        <p>Controle total da sua frota: rastreamento, manutenção preventiva, consumo e produtividade em um único painel.</p>
+        <a href="#contato" class="solucao-card__link">Saiba mais <i class="fas fa-arrow-right"></i></a>
+      </div>
+      <div class="solucao-card solucao-card--orange" data-animate="fade-up" style="transition-delay:.2s">
+        <div class="solucao-card__icon"><i class="fas fa-satellite-dish"></i></div>
+        <h3>Monitoramento em Tempo Real</h3>
+        <p>Visualize o status de cada máquina e equipamento ao vivo, com alertas automáticos e notificações inteligentes.</p>
+        <a href="#contato" class="solucao-card__link">Saiba mais <i class="fas fa-arrow-right"></i></a>
+      </div>
+      <div class="solucao-card solucao-card--navy" data-animate="fade-up" style="transition-delay:.3s">
+        <div class="solucao-card__icon"><i class="fas fa-chart-bar"></i></div>
+        <h3>Relatórios e Analytics</h3>
+        <p>Dashboards interativos com KPIs personalizados para embasar decisões estratégicas com dados precisos.</p>
+        <a href="#contato" class="solucao-card__link">Saiba mais <i class="fas fa-arrow-right"></i></a>
+      </div>
+      <div class="solucao-card solucao-card--orange" data-animate="fade-up" style="transition-delay:.4s">
+        <div class="solucao-card__icon"><i class="fas fa-mobile-alt"></i></div>
+        <h3>App Mobile</h3>
+        <p>Aplicativo nativo para iOS e Android permitindo apontamentos e consultas em campo, mesmo offline.</p>
+        <a href="#contato" class="solucao-card__link">Saiba mais <i class="fas fa-arrow-right"></i></a>
+      </div>
+      <div class="solucao-card solucao-card--navy" data-animate="fade-up" style="transition-delay:.5s">
+        <div class="solucao-card__icon"><i class="fas fa-plug"></i></div>
+        <h3>Integrações</h3>
+        <p>Integração com ERPs, sistemas de RH e APIs de terceiros para um fluxo de dados unificado e sem retrabalho.</p>
+        <a href="#contato" class="solucao-card__link">Saiba mais <i class="fas fa-arrow-right"></i></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ VANTAGENS ══════════════════ -->
+<section class="section vantagens" id="vantagens">
+  <div class="container">
+    <div class="section-header" data-animate="fade-up">
+      <span class="section-badge section-badge--light">Por Que Escolher a TGSLog</span>
+      <h2 class="section-title" style="color:#fff">Vantagens que fazem a <span style="color:var(--orange)">diferença</span></h2>
+    </div>
+    <div class="vantagens__grid">
+      <div class="vantagem-item" data-animate="fade-up">
+        <div class="vantagem-item__icon"><i class="fas fa-bolt"></i></div>
+        <div><strong>Implementação Rápida</strong><p>Seu sistema operando em até 72 horas, sem impacto na rotina da equipe.</p></div>
+      </div>
+      <div class="vantagem-item" data-animate="fade-up" style="transition-delay:.08s">
+        <div class="vantagem-item__icon"><i class="fas fa-lock"></i></div>
+        <div><strong>Dados Seguros</strong><p>Infraestrutura em nuvem com criptografia de ponta e conformidade com a LGPD.</p></div>
+      </div>
+      <div class="vantagem-item" data-animate="fade-up" style="transition-delay:.16s">
+        <div class="vantagem-item__icon"><i class="fas fa-headset"></i></div>
+        <div><strong>Suporte Dedicado</strong><p>Equipe técnica disponível para atender e resolver qualquer demanda com agilidade.</p></div>
+      </div>
+      <div class="vantagem-item" data-animate="fade-up" style="transition-delay:.24s">
+        <div class="vantagem-item__icon"><i class="fas fa-sync-alt"></i></div>
+        <div><strong>Atualizações Contínuas</strong><p>Plataforma sempre evoluindo com novos recursos e melhorias sem custo adicional.</p></div>
+      </div>
+      <div class="vantagem-item" data-animate="fade-up" style="transition-delay:.32s">
+        <div class="vantagem-item__icon"><i class="fas fa-dollar-sign"></i></div>
+        <div><strong>Custo-Benefício</strong><p>Planos flexíveis que se adaptam ao tamanho e às necessidades da sua empresa.</p></div>
+      </div>
+      <div class="vantagem-item" data-animate="fade-up" style="transition-delay:.4s">
+        <div class="vantagem-item__icon"><i class="fas fa-graduation-cap"></i></div>
+        <div><strong>Treinamento Incluído</strong><p>Capacitação completa para toda a sua equipe, garantindo adoção total da plataforma.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ BLOG ══════════════════ -->
+<section class="section blog" id="blog">
+  <div class="container">
+    <div class="section-header" data-animate="fade-up">
+      <span class="section-badge">Conteúdos</span>
+      <h2 class="section-title">Últimas <span class="highlight">publicações</span></h2>
+    </div>
+    <div class="blog__grid">
+      <article class="post-card" data-animate="fade-up">
+        <div class="post-card__img"><span class="post-card__cat">Gestão</span></div>
+        <div class="post-card__body">
+          <span class="post-card__date"><i class="fas fa-calendar-alt"></i> 01 Abr 2026</span>
+          <h3>Como o RDUM aumenta a eficiência operacional</h3>
+          <p>Descubra como o relatório diário de utilização de máquinas pode transformar a produtividade da sua empresa.</p>
+          <a href="#" class="post-card__link">Leia mais <i class="fas fa-arrow-right"></i></a>
+        </div>
+      </article>
+      <article class="post-card" data-animate="fade-up" style="transition-delay:.1s">
+        <div class="post-card__img"><span class="post-card__cat">Tecnologia</span></div>
+        <div class="post-card__body">
+          <span class="post-card__date"><i class="fas fa-calendar-alt"></i> 25 Mar 2026</span>
+          <h3>IoT aplicado à logística: o futuro é agora</h3>
+          <p>A Internet das Coisas está revolucionando o setor logístico. Veja como sua empresa pode se beneficiar.</p>
+          <a href="#" class="post-card__link">Leia mais <i class="fas fa-arrow-right"></i></a>
+        </div>
+      </article>
+      <article class="post-card" data-animate="fade-up" style="transition-delay:.2s">
+        <div class="post-card__img"><span class="post-card__cat">Frota</span></div>
+        <div class="post-card__body">
+          <span class="post-card__date"><i class="fas fa-calendar-alt"></i> 18 Mar 2026</span>
+          <h3>5 indicadores essenciais para gestão de frotas</h3>
+          <p>Conheça os KPIs mais importantes para monitorar a saúde e eficiência da sua frota de equipamentos.</p>
+          <a href="#" class="post-card__link">Leia mais <i class="fas fa-arrow-right"></i></a>
+        </div>
+      </article>
+    </div>
+    <div class="text-center" style="margin-top:2.5rem">
+      <a href="#" class="btn btn--outline">Ver Todos os Conteúdos</a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ CTA / CONTATO ══════════════════ -->
+<section class="section cta-banner" id="contato">
+  <div class="container cta-banner__inner" data-animate="fade-up">
+    <div>
+      <h2>Pronto para transformar sua operação?</h2>
+      <p>Fale com um especialista TGSLog e descubra como podemos ajudar sua empresa hoje.</p>
+    </div>
+    <div class="cta-banner__form">
+      <form onsubmit="handleForm(event)">
+        <input type="text" name="nome" placeholder="Seu nome" required>
+        <input type="email" name="email" placeholder="Seu e-mail" required>
+        <input type="tel" name="telefone" placeholder="Telefone / WhatsApp" required>
+        <textarea name="mensagem" placeholder="Mensagem (opcional)" rows="3"></textarea>
+        <button type="submit" class="btn btn--orange btn--full">Entrar em Contato <i class="fas fa-paper-plane"></i></button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ FOOTER ══════════════════ -->
+<footer class="footer">
+  <div class="container footer__grid">
+    <div class="footer__brand">
+      <a href="tgslog-landing.html" class="navbar__logo">
+    <img src="iconTGS.png" alt="TGSLOG" width="150px" class="logo-img">
+</a>
+      <p>Soluções inteligentes em logística, monitoramento e gestão operacional para empresas que buscam eficiência e controle em tempo real.</p>
+      <div class="footer__socials">
+        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+        <a href="#" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+        <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+      </div>
+    </div>
+    <div class="footer__col">
+      <h4>Navegação</h4>
+      <ul>
+        <li><a href="#sobre">Sobre Nós</a></li>
+        <li><a href="#solucoes">Soluções</a></li>
+        <li><a href="#vantagens">Vantagens</a></li>
+        <li><a href="#blog">Blog</a></li>
+        <li><a href="#contato">Contato</a></li>
+      </ul>
+    </div>
+    <div class="footer__col">
+      <h4>Soluções</h4>
+      <ul>
+        <li><a href="#solucoes">Monitoramento</a></li>
+        <li><a href="#solucoes">Gestão de Frotas</a></li>
+        <li><a href="#solucoes">Relatório RDUM</a></li>
+        <li><a href="#solucoes">App Mobile</a></li>
+        <li><a href="#solucoes">Integrações</a></li>
+      </ul>
+    </div>
+    <div class="footer__col">
+      <h4>Contato</h4>
+      <ul class="footer__contact">
+        <li><i class="fas fa-map-marker-alt"></i> Av. Principal, 1000 – Brasil</li>
+        <li><i class="fas fa-phone"></i><a href="tel:+5584991696213">(84) 99169-6213</a></li>
+        <li><i class="fas fa-envelope"></i><a href="mailto:palhareseraldo@gmail.com">palhareseraldo@gmail.com</a></li>
+        <li><i class="fas fa-clock"></i> Seg–Sex, 08h às 17h</li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer__bottom">
+    <div class="container">
+      <p>Copyright © <span id="ano"></span> Palhares. Todos os direitos reservados.</p>
+      <div class="footer__links">
+        <a href="#">Política de Privacidade</a>
+        <a href="#">LGPD</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- WhatsApp Flutuante -->
+<a href="https://wa.me/5584991696213" class="whatsapp-float" target="_blank" aria-label="WhatsApp">
+  <i class="fab fa-whatsapp"></i>
+</a>
+
+<script>
+// Ano dinâmico
+document.getElementById('ano').textContent = new Date().getFullYear();
+
+// Navbar scroll
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  navbar.classList.toggle('scrolled', window.scrollY > 60);
+});
+
+// Hamburger
+const hamburger = document.getElementById('hamburger');
+const navMenu = document.getElementById('navMenu');
+hamburger.addEventListener('click', () => {
+  navMenu.classList.toggle('open');
+});
+navMenu.querySelectorAll('.navbar__link').forEach(l => {
+  l.addEventListener('click', () => navMenu.classList.remove('open'));
+});
+
+// Smooth scroll para âncoras
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) {
+      e.preventDefault();
+      window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY - 80, behavior: 'smooth' });
+    }
+  });
+});
+
+// Animações por scroll
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('in-view');
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.15 });
+document.querySelectorAll('[data-animate]').forEach(el => observer.observe(el));
+
+// Formulário (sem backend — abre WhatsApp com os dados)
+function handleForm(e) {
+  e.preventDefault();
+  const f = e.target;
+  const nome = f.nome.value;
+  const email = f.email.value;
+  const tel = f.telefone.value;
+  const msg = f.mensagem.value;
+  const texto = `Olá! Meu nome é ${nome}. Email: ${email}. Tel: ${tel}. ${msg ? 'Mensagem: ' + msg : ''}`;
+  window.open('https://wa.me/5500000000000?text=' + encodeURIComponent(texto), '_blank');
+}
+</script>
+</body>
+</html>
